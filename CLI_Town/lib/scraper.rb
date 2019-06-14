@@ -20,5 +20,24 @@ class CLI_Town::Scraper
         counter += 1
       end
     end
+    
+    def self.scrape_spell(spell)
+      attributes = {}
+      descriptors = []
+      spell_html = Nokogiri::HTML(open(spell))
+      name = spell_html.css('h1').text
+      spell_html.css('h4 a').each {|desc| descriptors << desc.text}
+      descriptors = descriptors.compact
+      school = descriptors[0]
+      if descriptors.size == 2
+        descriptor = descriptors[1]
+      end
+      if descriptors.size == 3
+        subschool = descriptors[1]
+        descriptor = descriptors[2]
+      end
+      #:name, :classes, :level, :school, :subschool, :descriptor, :components, :cast_time, :range, :effect, :duration, :saving_throw, :SR, :description, :alpha
+      
+    end
 
 end

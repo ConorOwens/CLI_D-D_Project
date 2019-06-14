@@ -1,6 +1,6 @@
 class CLI_Town::Spell
   
-attr_accessor :name, :description, :alpha
+attr_accessor :name, :classes, :level, :school, :subschool, :descriptor, :components, :cast_time, :range, :effect, :duration, :saving_throw, :SR, :description, :alpha
 
   @@all = []
 
@@ -9,8 +9,8 @@ attr_accessor :name, :description, :alpha
     @@all << self
   end
 
-  def self.create_from_collection(spell_array)
-    spell_array.each {|spell_hash| Spell.new(spell_hash)}
+  def self.create_from_collection(spell_list)
+    spell_list.each {|spell_hash| Spell.new(spell_hash)}
   end
 
   def add_spell_attributes(attributes_hash)
