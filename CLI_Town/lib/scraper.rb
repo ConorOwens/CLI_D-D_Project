@@ -35,9 +35,6 @@ class Scraper
       descriptors = []
       stats = []
       spell_html = Nokogiri::HTML(open(spell))
-      # scraping for name
-      name = spell_html.css('h1').text
-      attributes[:name] = name
       # scraping for school, subschool if any, and descriptors if any
       spell_html.css('h4 a').each {|desc| descriptors << desc.text}
       descriptors = descriptors.compact
