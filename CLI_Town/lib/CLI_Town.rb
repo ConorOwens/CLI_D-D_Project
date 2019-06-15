@@ -28,8 +28,10 @@ class CommandLineInterface
     puts "_____________________________________________________________________"
     puts "Say 'all spells' to see a complete list of castable spells." 
     puts "Say 'spells by letter' to see a list of spells starting with a specific letter. "
-    puts "Say 'spells by class' to see a list of spells according to what class can cast them."
+    puts "Say 'spells by class' to see a list of spells available toa specific type of caster."
+    puts "Say 'spells by level' to see a list of spells of a given level."
     puts "At any point, say the name of a spell to see more specifics about that spell."
+    puts "You can say 'commands' at any time to see this list again."
     input = gets.strip
     if input.downcase == "all spells"
       counter = 1
@@ -60,6 +62,15 @@ class CommandLineInterface
         if spell.classes.include?(input_beta.capitalize)
           puts "#{counter}. #{spell}"
           counter += 1 
+        end
+      end
+      input = gets.strip
+    elsif input.downcase == "spells by level"
+      puts "Nine identical books float in a line towards you. Their covers show numbers in stylized embossing 0 through 9. Which do you reach for?"
+      input_gamma = gets.strip
+      Spell.all.each do |spell|
+        if spell.level.include?(input_gamma)
+          puts "#{spell.name}"
         end
       end
       input = gets.strip
@@ -95,8 +106,18 @@ class CommandLineInterface
           puts "#{spell.description}"
         end
       end
+      input = gets.strip\
+    elsif input.downcase == "commands"
       
-    elsif
+    else
+      puts "The small pamphlet shakes to get your attention. It now reads 'I'm sorry, I didn't understand that. Say 'commands' at any time to see a list of commands.'"
+      puts "Say 'all spells' to see a complete list of castable spells." 
+      puts "Say 'spells by letter' to see a list of spells starting with a specific letter. "
+      puts "Say 'spells by class' to see a list of spells available toa specific type of caster."
+      puts "Say 'spells by level' to see a list of spells of a given level."
+      puts "At any point, say the name of a spell to see more specifics about that spell."
+      puts "You can say 'commands' at any time to see this list again."
+      input = gets.strip
   end
     
   end
