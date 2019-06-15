@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'open-uri'
-class Scraper
+
+class CLI_Town::Scraper
 
        # alpha_book[alpha[counter]].each {|spell| spell.gsub(/\Wu2019/, "'")}
 
