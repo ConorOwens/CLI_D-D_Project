@@ -4,8 +4,8 @@ attr_accessor :name, :classes, :level, :school, :subschool, :descriptor, :compon
 
   @@all = []
 
-  def initialize(spell_hash)
-    spell_hash.each {|key, value| self.send(("#{key}="), value)}
+  def initialize(spell_base)
+    spell_base.each {|key, value| self.send(("#{key}="), value)}
     @@all << self
   end
 
