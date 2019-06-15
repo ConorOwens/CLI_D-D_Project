@@ -1,6 +1,6 @@
 class CLI_Town::Spell
   
-attr_accessor :name, :classes, :level, :school, :subschool, :descriptor, :components, :cast_time, :range, :effect, :duration, :saving_throw, :SR, :description, :alpha
+attr_accessor :name, :classes, :level, :school, :subschool, :descriptor, :components, :cast_time, :range, :effect, :duration, :saving_throw, :SR, :description, :alpha, :url
 
   @@all = []
 
