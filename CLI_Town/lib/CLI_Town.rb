@@ -3,7 +3,7 @@ require_relative "../lib/scraper.rb"
 require_relative "../lib/spell.rb"
 require 'nokogiri'
 
-class CommandLineInterface
+class Command_Line_Interface
   
   def run
     make_spells
@@ -106,11 +106,8 @@ class CommandLineInterface
           puts "#{spell.description}"
         end
       end
-      input = gets.strip\
+      input = gets.strip
     elsif input.downcase == "commands"
-      
-    else
-      puts "The small pamphlet shakes to get your attention. It now reads 'I'm sorry, I didn't understand that. Say 'commands' at any time to see a list of commands.'"
       puts "Say 'all spells' to see a complete list of castable spells." 
       puts "Say 'spells by letter' to see a list of spells starting with a specific letter. "
       puts "Say 'spells by class' to see a list of spells available toa specific type of caster."
@@ -118,8 +115,10 @@ class CommandLineInterface
       puts "At any point, say the name of a spell to see more specifics about that spell."
       puts "You can say 'commands' at any time to see this list again."
       input = gets.strip
-  end
-    
+    else
+      puts "The small pamphlet shakes to get your attention. It now reads 'I'm sorry, I didn't understand that. Say 'commands' at any time to see a list of commands.'"
+      input = gets.strip
+    end
   end
 
 end

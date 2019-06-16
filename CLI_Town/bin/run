@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/CLI_Town.rb"
+
+Command_Line_interface.new.run
