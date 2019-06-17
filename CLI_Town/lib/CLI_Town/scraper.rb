@@ -50,8 +50,30 @@ class Scraper
       stats.each do |stat|
         if ["0","1","2","3","4","5","6","7","8","9"].include?(stat[-1])
           class_level = stat.split(" ")
-          attributes[:list] << class_level[0]
+          # correcting for abbreviations
+          # abbreviations : bard Brd; cleric Clr; druid Drd; paladin Pal; ranger Rgr; sorcerer Sor; wizard Wiz.
+          if class_level[0] == "Clr"
+            attributes[:list] << "Cleric"
+          elsif class_level[0] == "Brd"
+            attributes[:list] << "Bard"
+          elsif class_level[0] == "Drd"
+            attributes[:list] << "Druid"
+          elsif class_level[0] == "Pal"
+            attributes[:list] << "Paladin"
+          elsif class_level[0] == "Rgr"
+            attributes[:list] << "Ranger"
+          elsif class_level[0] == "Sor/Wiz"
+            attributes[:list] << "Sorcerer"
+            attributes[:list] << "Wizard"
+          end
+          # correcting for domains and sor/wiz not getting 2 level values
+          if ["Brd","Clr","Drd","Pal","Rgr"].include?(class_level[0])
           attributes[:level] << class_level[1]
+          end
+          if class_level[0] == "Sor/Wiz"
+            attributes[:level] << class_level[1]
+            attributes[:level] << class_level[1]
+          end
         end
       end
       # other stats
