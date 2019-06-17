@@ -1,6 +1,6 @@
 class Spell
   
-attr_accessor :name, :list, :level, :school, :subschool, :descriptor, :components, :cast_time, :range, :effect, :duration, :saving_throw, :SR, :description, :alpha, :url
+attr_accessor :name, :list, :level, :school, :subschool, :descriptor, :components, :cast_time, :range, :effect, :duration, :saving_throw, :sr, :description, :alpha, :url
 
   @@all = []
 

@@ -11,7 +11,7 @@ class Scraper
       # scraping for :alpha (Spell A, B, C...)
       spell_list_html.css('h2').each {|segment| alpha << segment.text}
       alpha.each {|alpha| alpha_book[alpha] = []}
-      # scraping for :names, :alpha, :url
+      # scraping for :name, :alpha, :url
       spell_list_html.css('li ul li').each_with_index do |spell, index|
         if index > 31
           name = spell.text
@@ -77,7 +77,7 @@ class Scraper
         end
       end
       # other stats
-      attributes[:SR] = stats[-1]
+      attributes[:sr] = stats[-1]
       attributes[:saving_throw] = stats[-2]
       attributes[:duration] = stats[-3]
       attributes[:effect] = stats[-4]

@@ -28,6 +28,7 @@ class Command_Line_Interface
     puts "Say 'spells by class' to see a list of spells available toa specific type of caster."
     puts "Say 'spells by level' to see a list of spells of a given level."
     puts "At any point, say the name of a spell to see more specifics about that spell."
+    puts "Say 'exit' to leave this place of knowledge."
     puts "You can say 'commands' at any time to see this list again."
     input = gets.strip
     until input.downcase == "exit"
@@ -72,10 +73,10 @@ class Command_Line_Interface
           end
         end
         input = gets.strip
-      elsif Spell.all.each {|spell| spell.name.include?(input.capitalize)}
+      elsif Spell.all.find {|spell| spell.name.downcase == input.downcase} != nil
         puts "A single shining parchment darts from between the books. The spell you seek is emblazoned in filligree on it's surface."
         Spell.all.each do |spell|
-          if Spell.all.name == input.capitalize
+          if spell.name.downcase == input.downcase
             #attr_accessor :name, :list, :level, :school, :subschool, :descriptor, :components, :cast_time, :range, :effect, :duration, :saving_throw, :SR  , :description, :alpha, :url
             puts "Name: #{spell.name}"
             counter = 0 
@@ -111,6 +112,7 @@ class Command_Line_Interface
         puts "Say 'spells by class' to see a list of spells available toa specific type of caster."
         puts "Say 'spells by level' to see a list of spells of a given level."
         puts "At any point, say the name of a spell to see more specifics about that spell."
+        puts "Say 'exit' to leave this place of knowledge."
         puts "You can say 'commands' at any time to see this list again."
         input = gets.strip
       else
