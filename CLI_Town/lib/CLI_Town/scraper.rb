@@ -1,5 +1,11 @@
 require_relative "../environment.rb"
 
+require 'nokogiri'
+require 'open-uri'
+
+##------------------------SCRAPER-----------------------------------##
+
+
 class Scraper
 
     def self.scrape_spell_list(spell_list)
@@ -29,9 +35,11 @@ class Scraper
 
     def self.scrape_spell(spell)
       # empty info holders and html
-      attributes = {list: [], level: []}
+      attributes = {list: [], level: [], description: []}
       descriptors = []
       stats = []
+      description = []
+      headers = []
       spell_html = Nokogiri::HTML(open(spell))
       # scraping for school, subschool if any, and descriptors if any
       spell_html.css('h4 a').each {|desc| descriptors << desc.text}
@@ -47,32 +55,33 @@ class Scraper
       # scraping for stat block
       spell_html.css('tr td').each {|stat| stats << stat.text}
       # seperating casting class and level
-      stats.each do |stat|
-        if ["0","1","2","3","4","5","6","7","8","9"].include?(stat[-1])
-          class_level = stat.split(" ")
-          # correcting for abbreviations
-          # abbreviations : bard Brd; cleric Clr; druid Drd; paladin Pal; ranger Rgr; sorcerer Sor; wizard Wiz.
-          if class_level[0] == "Clr"
+      if stats != []
+        class_level = stats[0].split(/[\s,]/).delete_if {|stat| stat == ""}
+      end
+      # correcting for abbreviations, setting spell lists and levels
+      # abbreviations list : bard Brd; cleric Clr; druid Drd; paladin Pal; ranger Rgr; sorcerer Sor; wizard Wiz.
+      if class_level
+        class_level.each_with_index do |stat, i|
+          if stat == "Clr"
             attributes[:list] << "Cleric"
-          elsif class_level[0] == "Brd"
+            attributes[:level] << class_level[i+1]
+          elsif stat == "Brd"
             attributes[:list] << "Bard"
-          elsif class_level[0] == "Drd"
+            attributes[:level] << class_level[i+1]
+          elsif stat == "Drd"
             attributes[:list] << "Druid"
-          elsif class_level[0] == "Pal"
+            attributes[:level] << class_level[i+1]
+          elsif stat == "Pal"
             attributes[:list] << "Paladin"
-          elsif class_level[0] == "Rgr"
+            attributes[:level] << class_level[i+1]
+          elsif stat == "Rgr"
             attributes[:list] << "Ranger"
-          elsif class_level[0] == "Sor/Wiz"
+            attributes[:level] << class_level[i+1]
+          elsif stat == "Sor/Wiz"
             attributes[:list] << "Sorcerer"
+            attributes[:level] << class_level[i+1]
             attributes[:list] << "Wizard"
-          end
-          # correcting for domains and sor/wiz not getting 2 level values
-          if ["Brd","Clr","Drd","Pal","Rgr"].include?(class_level[0])
-          attributes[:level] << class_level[1]
-          end
-          if class_level[0] == "Sor/Wiz"
-            attributes[:level] << class_level[1]
-            attributes[:level] << class_level[1]
+            attributes[:level] << class_level[i+1]
           end
         end
       end
@@ -84,9 +93,22 @@ class Scraper
       attributes[:range] = stats[-5]
       attributes[:cast_time] = stats[-6]
       attributes[:components] = stats[-7]
-      attributes[:description] = "DESCRIPTION"
-    
-    attributes
+      #scraping for :description
+      spell_html.css('p').each do |desc|
+        description << desc.text
+      end
+      description.pop(3)
+      description.each {|chunk| chunk.strip!}
+      spell_html.css('h6').each do |header|
+        headers << header.text
+      end
+      counter = 1
+      until counter > headers.length
+        description.insert(counter*-2, headers[-counter])
+        counter += 1
+      end
+      description.each {|text| attributes[:description] << text}
+      attributes
     end
     
   end

@@ -69,7 +69,15 @@ class Command_Line_Interface
         input_gamma = gets.strip
         Spell.all.each do |spell|
           if spell.level.include?(input_gamma)
-            puts "#{spell.name}"
+            counter = 0 
+            list_level_combined = []
+            until counter == spell.list.size 
+              list_level_combined << "#{spell.list[counter]} (#{spell.level[counter]})"
+              counter += 1
+            end
+            puts "#{spell.name} : #{list_level_combined.join(", ")}"
+            puts "#{spell.effect}"
+            puts"----------"
           end
         end
         input = gets.strip
@@ -81,7 +89,7 @@ class Command_Line_Interface
             puts "Name: #{spell.name}"
             counter = 0 
             while counter < spell.list.size 
-              puts "#{spell.list[counter]} [#{spell.level[counter]}]"
+              puts "#{spell.list[counter]} (#{spell.level[counter]})"
               counter += 1
             end
             puts "Class(es): #{spell.list}"
@@ -102,7 +110,7 @@ class Command_Line_Interface
             puts "Saving Throw: #{spell.saving_throw}"
             puts "SR: #{spell.sr}"
             puts "________________________"
-            puts "#{spell.description}"
+            spell.description.each {|text| puts "#{text}"}
           end
         end
         input = gets.strip
