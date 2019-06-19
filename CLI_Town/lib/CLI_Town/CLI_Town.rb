@@ -42,14 +42,21 @@ class Command_Line_Interface
   end
   
   def spells_alpha
-    puts "A voice whispers down the eternal hallways. 'Which letter would you like to see more closely?'"
+    puts "A voice whispers down the eternal hallways. 'Which letter would you like to see more closely?' The pamphlet instructs you to speak any single letter, or to say 'return' to return to previous options"
     input_alpha = gets.strip
-    puts "A scroll unfurls in front of you with spells listed upon it."
-    counter = 1
-    Spell.all.each do |spell|
-      if spell.alpha[-2] == input_alpha.upcase
-        puts "#{counter}. #{spell.name}"
-        counter += 1 
+    until input_alpha.downcase == 'return'
+      if ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','z'].include?(input_alpha.downcase)
+        puts "A scroll unfurls in front of you with spells listed upon it."
+        counter = 1
+        Spell.all.each do |spell|
+          if spell.alpha[-2] == input_alpha.upcase
+            puts "#{counter}. #{spell.name}"
+            counter += 1 
+          end
+        end
+      else
+        puts "No spells fall under that category. Please try another or say 'return' to get back to your previous options."
+        input_alpha = gets.strip
       end
     end
   end
