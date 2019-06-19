@@ -89,18 +89,26 @@ class Command_Line_Interface
   def spells_level
     puts "Nine identical books float in a line towards you. Their covers show numbers in stylized embossing 0 through 9. Which do you reach for?"
     input_gamma = gets.strip
-    until input_gamma = gets.strip
-    Spell.all.each do |spell|
-      if spell.level.include?(input_gamma)
-        counter = 0 
-        list_level_combined = []
-        until counter == spell.list.size 
-          list_level_combined << "#{spell.list[counter]} (#{spell.level[counter]})"
-          counter += 1
+    until input_gamma == 'return'
+      if ['0','1','2','3','4','5','6','7','8','9'].include?(input_gamma)
+        Spell.all.each do |spell|
+          if spell.level.include?(input_gamma)
+            counter = 0 
+            list_level_combined = []
+            until counter == spell.list.size 
+              list_level_combined << "#{spell.list[counter]} (#{spell.level[counter]})"
+              counter += 1
+            end
+            puts "#{spell.name} : #{list_level_combined.join(", ")}"
+            puts "#{spell.effect}"
+            puts"----------"
+          end
         end
-        puts "#{spell.name} : #{list_level_combined.join(", ")}"
-        puts "#{spell.effect}"
-        puts"----------"
+        puts "Reach for another numbered book, or say 'return' to go back to your previous options."
+        input_gamma = gets.strip
+      else
+        puts "The books manage to look... confused. Your intention is unclear. Which book numbered 0-9 do you wish to reach for? You can always say'return' to make the books retreat and see your previous options."
+        input_gamma = gets.strip
       end
     end
   end
