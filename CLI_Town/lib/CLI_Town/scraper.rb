@@ -3,9 +3,6 @@ require_relative "../environment.rb"
 require 'nokogiri'
 require 'open-uri'
 
-##------------------------SCRAPER-----------------------------------##
-
-
 class Scraper
 
     def self.scrape_spell_list(spell_list)
