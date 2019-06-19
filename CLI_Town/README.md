@@ -2,7 +2,7 @@
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/CLI_Town`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-TODO: Delete this and the text above, and describe your gem
+This gem lets you dig through all the spells of the 3.5 edition of Dungeons and Dargons to find detailed information on them. It's an interactive spellbook, with a fe different way to parse through that information! Want to know all the spells for a certain class? Want to see all spells of a level? Maybe you're looking for detailed information about a specific spell? Enter the library to find out!
 
 ## Installation
 
@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Once the program is running simpy follow the onscreen commands. The program allows you to sort spell names by a variety of criteria and to get specific information about a single spell all in one place. If you've chosen to sort by letter, you don't even have to type that command again to switch letters. Simply type the new letter you wish to search by and a new list populates!
 
 ## Development
 
