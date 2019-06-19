@@ -30,6 +30,7 @@ class Command_Line_Interface
     puts "At any point, say the name of a spell to see more specifics about that spell."
     puts "Say 'exit' to leave this place of knowledge."
     puts "You can say 'commands' at any time to see this list again."
+    puts "Speak your command!"
   end
   
   def list_spells
@@ -54,6 +55,8 @@ class Command_Line_Interface
             counter += 1 
           end
         end
+        puts "You may select another letter to view, or speak 'return'."
+        input_alpha = gets.strip
       else
         puts "No spells fall under that category. Please try another or say 'return' to get back to your previous options."
         input_alpha = gets.strip
@@ -62,14 +65,23 @@ class Command_Line_Interface
   end
   
   def spells_class
-    puts "Many voices sing out at once. It's hard to understand their commands but as they repeat you can discern them. 'Sorceror? Wizard? Cleric?   Druid? Paladin? Bard? Ranger? CHOOSE!'"
+    puts "Many voices sing out at once. It's hard to understand their commands but as they repeat you can discern them. 'Sorcerer? Wizard? Cleric? Druid? Paladin? Bard? Ranger? CHOOSE!'"
     input_beta = gets.strip
-    puts "The voices quiet, and an ancient and cracked leather book floats slowly towards you with pages opened."
-    counter = 1
-    Spell.all.each do |spell|
-      if spell.list.include?(input_beta.capitalize)
-        puts "#{counter}. #{spell.name}"
-        counter += 1 
+    until input_beta == 'return'
+      if ["sorcerer", "wizard", "cleric", "druid", "paladin", "bard", "ranger"].include?(input_beta.downcase)
+        puts "The voices quiet, and an ancient and cracked leather book floats slowly towards you with pages opened."
+        counter = 1
+        Spell.all.each do |spell|
+          if spell.list.include?(input_beta.capitalize)
+            puts "#{counter}. #{spell.name}"
+            counter += 1 
+          end
+        end
+        puts "You may select another class to view or say 'return' to get back to your previous optons."
+        input_beta = gets.strip
+      else
+        puts "The voices hiss and boo, chiding you in many languages. 'THAT IS NO CLASS! CHOOSE AGAIN!' You may say 'return' to return to your previous options."
+        input_beta = gets.strip
       end
     end
   end
@@ -77,6 +89,7 @@ class Command_Line_Interface
   def spells_level
     puts "Nine identical books float in a line towards you. Their covers show numbers in stylized embossing 0 through 9. Which do you reach for?"
     input_gamma = gets.strip
+    until input_gamma = gets.strip
     Spell.all.each do |spell|
       if spell.level.include?(input_gamma)
         counter = 0 
@@ -142,24 +155,31 @@ class Command_Line_Interface
     until input.downcase == "exit"
       if input.downcase == "all spells"
         list_spells
+        puts "Speak your command!"
         input = gets.strip
       elsif input.downcase == "spells by letter"
         spells_alpha
+        puts "Speak your command!"
         input = gets.strip
       elsif input.downcase == "spells by class"
         spells_class
+        puts "Speak your command!"
         input = gets.strip
       elsif input.downcase == "spells by level"
         spells_level
+        puts "Speak your command!"
         input = gets.strip
       elsif Spell.all.find {|spell| spell.name.downcase == input.downcase} != nil
         single_spell(input.downcase)
+        puts "Speak your command!"
         input = gets.strip
       elsif input.downcase == "commands"
         commands
+        puts "Speak your command!"
         input = gets.strip
       else
         puts "The small pamphlet shakes to get your attention. It now reads 'I'm sorry, I didn't understand that. Say 'commands' at any time to see a list   of commands.'"
+        puts "Speak your command!"
         input = gets.strip
       end # end if/elsif
     end # end until loop
